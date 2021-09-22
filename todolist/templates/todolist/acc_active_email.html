@@ -1,0 +1,5 @@
+{% autoescape off %}
+Для підтвердження реєестрації:
+Будь ласка, перейдіть за посиланням, http://{{ domain }}{% url 'activate' uidb64=uid token=token %}, щоб підтвердити реєстрацію.
+
+{% endautoescape %}

@@ -1,0 +1,156 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>ToDo - {% block meta_title %}{% endblock meta_title %}</title>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <script type="text/javascript" src="{% static 'todolist/js/jquery/jquery.min.js' %} "></script>
+        <script type="text/javascript" src="{% static 'todolist/js/jquery-ui/jquery-ui.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'todolist/js/popper.js/popper.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'todolist/js/script.js' %} "></script>
+          <![endif]-->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+
+
+        <!-- Google font-->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
+        <!-- Required Fremwork -->
+        <link rel="stylesheet" type="text/css" href="{% static 'todolist/css/bootstrap/css/bootstrap.min.css' %}">
+        <!-- waves.css -->
+        <link rel="stylesheet" href="{% static 'todolist/pages/waves/css/waves.min.css' %}" type="text/css" media="all">
+        <!-- themify-icons line icon -->
+        <link rel="stylesheet" type="text/css" href="{% static 'todolist/icon/themify-icons/themify-icons.css' %}">
+        <!-- ico font -->
+        <link rel="stylesheet" type="text/css" href="{% static 'todolist/icon/icofont/css/icofont.css' %}">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" type="text/css" href="{% static 'todolist/icon/font-awesome/css/font-awesome.min.css' %}">
+        <!-- Notification.css -->
+        <link rel="stylesheet" type="text/css" href="{% static 'todolist/pages/notification/notification.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'todolist/css/animate.css/css/animate.css' %}">
+        <!-- Style.css -->
+        <link rel="stylesheet" type="text/css" href="{% static 'todolist/css/style.css' %}">
+
+        <link rel="stylesheet" type="text/css" href="{% static 'todolist/css/jquery.mCustomScrollbar.css'%}">
+        {% block extra_css_top %}
+        {% endblock extra_css_top %}
+        {% block extra_js_top %}
+        {% endblock extra_js_top %}
+
+    </head>
+    <body>
+        <div class="theme-loader">
+            <div class="loader-track">
+                <div class="preloader-wrapper">
+                    <div class="spinner-layer spinner-blue">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="gap-patch">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="circle-clipper right">
+                            <div class="circle"></div>
+                        </div>
+                    </div>
+                    <div class="spinner-layer spinner-red">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="gap-patch">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="circle-clipper right">
+                            <div class="circle"></div>
+                        </div>
+                    </div>
+
+                    <div class="spinner-layer spinner-yellow">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="gap-patch">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="circle-clipper right">
+                            <div class="circle"></div>
+                        </div>
+                    </div>
+
+                    <div class="spinner-layer spinner-green">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="gap-patch">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="circle-clipper right">
+                            <div class="circle"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if messages %}
+            <script type="text/javascript">
+                var messages = []
+                {% for mess in messages %}
+                    messages.push(['{{mess}}', '{{ mess.tags }}'])
+                {% endfor %}
+            </script>
+{#            {% for mess in messages %}#}
+{#                <script type="text/javascript">#}
+{#                    var mess = {{ mess }}#}
+{#                </script>#}
+{#                <div onload="notify('top', 'right', 'icon', 'inverse', 'animated fadeInUp', 'animated fadeOutUp')"></div>#}
+{#                <div data-growl="container" class="alert alert-{{ mess.tags }} alert-dismissable growl-animated animated fadeInDown" role="alert" data-growl-position="top-right" style="position: fixed; margin: 0px; z-index: 999999; display: inline-block; top: 95px; right: 30px;">#}
+{#                    <button class="btn notification btn-inverse waves-effect" data-type="inverse" data-from="top" data-align="right">Inverse</button>#}
+{##}
+{#                    <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="display: block; z-index: 999998;">#}
+{#                        <span aria-hidden="true">&times;</span>#}
+{#                        <span class="sr-only">Close</span>#}
+{#                    </button>#}
+{#                    <span data-growl="icon"></span>#}
+{#                    <span data-growl="message">{{ mess }}</span>#}
+{#                    <a href="#" data-growl="url"></a>#}
+{#                </div>#}
+{#            {% endfor %}#}
+        {% endif %}
+        <div id="pcoded" class="pcoded">
+            <div class="pcoded-overlay-box"></div>
+            <div class="pcoded-container navbar-wrapper">
+
+                <div class="pcoded-main-container">
+                    <div class="pcoded-wrapper">
+                        {% block content %}
+                        {% endblock content %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="{% static 'todolist/js/jquery/jquery.min.js' %} "></script>
+        <script type="text/javascript" src="{% static 'todolist/js/jquery-ui/jquery-ui.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'todolist/js/popper.js/popper.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'todolist/js/bootstrap/js/bootstrap.min.js' %}"></script>
+        <!-- waves js -->
+        <script src="{% static 'todolist/pages/waves/js/waves.min.js' %}"></script>
+        <!-- jquery slimscroll js -->
+        <script type="text/javascript" src="{% static 'todolist/js/jquery-slimscroll/jquery.slimscroll.js' %}"></script>
+        <script src="{% static 'todolist/js/bootstrap-growl.min.js' %}"></script>
+        <script src="{% static 'todolist/pages/notification/notification.js' %}"></script>
+        <script src="{% static 'todolist/js/pcoded.min.js' %}"></script>
+
+
+        <script src="{% static 'todolist/js/vertical/vertical-layout.min.js' %} "></script>
+        <script src="{% static 'todolist/js/jquery.mCustomScrollbar.concat.min.js' %} "></script>
+        <script type="text/javascript" src="{% static 'todolist/js/common-pages.js' %}"></script>
+
+        <!-- menu js -->
+        <script type="text/javascript" src="{% static 'todolist/js/script.js' %} "></script>
+        {% block extra_css_bottom %}
+        {% endblock extra_css_bottom %}
+        {% block extra_js_bottom %}
+        {% endblock extra_js_bottom %}
+    </body>
+</html>

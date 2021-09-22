@@ -1,0 +1,125 @@
+{% extends "todolist/main.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block meta_title %}{% endblock meta_title %}
+{% block extra_js %}
+    {#    для додаткових файлів js    #}
+{% endblock extra_js %}
+
+{% block extra_css %}
+    {#    для додаткових файлів css    #}
+{% endblock extra_css %}
+{% block content %}
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+            <div class="page-wrapper">
+                <div class="page-body">
+                    <div class="row align-middle justify-content-center">
+                        <div class="col-sm-12 col-md-6 col-lg-5 col-xl-4 ">
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="card">
+                                            <div class="card-block">
+                                                <h4 class="sub-title">add todo task</h4>
+                                                <form method="POST">
+                                                    {% csrf_token %}
+                                                    {{ form|crispy }}
+                                                    <a type="button" href="{% url 'home' %}" class="btn btn-secondary btn-sm">Відміна</a>
+                                                    <button type="submit" class="btn btn-outline-dark btn-sm">Підтвердити</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-sm-12 col-xl-7 col-lg-8 col-md-10">
+                            <div class="card table-card">
+                                <div class="card-header">
+                                    <h5>ToDo</h5>
+                                </div>
+                                <div class="card-block tooltip-pop">
+                                    <div class="table-responsive">
+                                        <table class="table table-xs table-hover m-b-0 without-header">
+                                            <tbody>
+                                                {% for task in tasks %}
+                                                    {% if task.complete %}
+                                                        <tr class="table-active">
+                                                    {% else %}
+                                                        <tr>
+                                                    {% endif %}
+                                                        <td class="tooltip-pop">
+                                                            <button type="button"
+                                                                    class="btn btn-default waves-effect"
+                                                                    data-toggle="popover"
+                                                                    data-placement="top"
+                                                                    title="{{ task.title }}"
+                                                                    data-content="{{ task.description }}"
+                                                                    data-original-title="tooltip on top">
+                                                                    {{ task.title }}
+                                                            </button>
+                                                        </td>
+                                                        <td class="text-center"
+                                                            data-toggle="tooltip"
+                                                            data-placement="top"
+                                                            title=""
+                                                            data-original-title="Приорітет - {{ task.priority }}">
+                                                            {% if task.priority == 'LOW' %}
+                                                                <label class="badge badge-success text-success">.</label>
+                                                            {% elif task.priority == 'AVERAGE' %}
+                                                                <label class="badge badge-warning text-warning">.</label>
+                                                            {% else %}
+                                                                <label class="badge bg-danger text-danger">.</label>
+                                                            {% endif %}
+                                                        </td>
+                                                        <td class="text-center" data-toggle="tooltip"
+                                                            data-placement="top"
+                                                            title=""
+                                                            data-original-title="Дата завершення">{{ task.ended_at }}</td>
+                                                        {% if task.complete %}
+                                                            <td class="text-center">Виконано</td>
+                                                        {% else %}
+                                                            <td class="text-center"
+                                                                data-toggle="tooltip"
+                                                                data-placement="top"
+                                                                title=""
+                                                                data-original-title="Натисніть щоб відмітити виконаним">
+                                                                <a type="button"
+                                                                   href="{% url 'endTask' task.id %}"
+                                                                        class="badge badge-success">Виконати
+                                                                </a>
+                                                            </td>
+                                                        {% endif %}
+                                                    </tr>
+                                                {% endfor %}
+                                                <tr>
+                                                    <td><button type="button"
+                                                                    class="btn btn-default waves-effect"
+                                                                    data-toggle="modal"
+                                                                    data-target="#exampleModal">
+                                                                    Додати завдання
+                                                            </button></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>
+                                                        <a type="button" href="{% url 'logout' %}"
+                                                                    class="btn btn-default waves-effect">
+                                                                    Вийти</a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+

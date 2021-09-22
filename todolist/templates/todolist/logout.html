@@ -1,0 +1,19 @@
+{% extends "todolist/main.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+            <div class="page-wrapper">
+                <div class="page-body">
+                    <div class="row justify-content-center">
+                        <div class="col-sm-12 col-xl-6 col-lg-7 col-md-10 align-content-center">
+                            <h2>Ви успішно вийшли!</h2>
+                            <a href="{% url 'signin' %}" class="btn btn-primary btn-md btn-block waves-effect waves-light text-center m-b-20" style="position: relative;">Зайти в особистий кабінет</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

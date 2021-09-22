@@ -1,0 +1,27 @@
+{% extends "todolist/main.html" %}
+{% load crispy_forms_tags %}
+{% block meta_title %} Реєстрація{% endblock meta_title %}
+{% block content %}
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+            <div class="page-wrapper">
+                <div class="page-body">
+                    <div class="row align-middle justify-content-center">
+                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 ">
+                            <!-- Basic Form Inputs card start -->
+                            <div class="card">
+                                <div class="card-block">
+                                    <form method="POST">
+                                        {% csrf_token %}
+                                        {{ form|crispy }}
+                                        <button type="submit" class="btn btn-light">Реєстрація</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
