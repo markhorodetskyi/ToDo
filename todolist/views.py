@@ -160,7 +160,7 @@ def quadratic_equation(request):
             if form.is_valid():
                 form.save()
                 html_msg.success(request,
-                               f'Успіх')
+                                 f'Успіх')
                 return redirect('quadratic_equation')
             else:
                 html_msg.error(request,
@@ -196,7 +196,7 @@ def quadratic_equation(request):
         'form': form,
     }
 
-    if a2-a1 > 20 or b2-b1 > 20 or c2-c1 > 20:  # обмеження діапазону
+    if a2 - a1 > 20 or b2 - b1 > 20 or c2 - c1 > 20:  # обмеження діапазону
         html_msg.error(request, f'Завеликий діапазон аргументів, максимум 20. Будь ласка зменшіть діапазон')  # Django
         return render(request, 'todolist/equation.html', data)  # Django
 
@@ -205,7 +205,10 @@ def quadratic_equation(request):
     свариться РЕР8. Тож я зробив звичайну функцію. ну але лямбду правильніше використовувати анонімно, і можна б
     було запхати її в result_list.append, та я не ризикнув, він і так не читабельний. Але зато в одному рядку))
     """
-    def discriminant(a, b, c): return (b * b) - 4 * a * c
+
+    def discriminant(a, b, c):
+        return (b * b) - 4 * a * c
+
     # discriminant = lambda a, b, c: (b * b) - 4 * a * c
 
     def root(a, b, c, d):
@@ -213,15 +216,25 @@ def quadratic_equation(request):
 
     # root = lambda a, b, c, d: [round(((b * (-1)) - sqrt(d(a, b, c))) / 2 * a, 2),
     #                            round(((b * (-1)) + sqrt(d(a, b, c))) / 2 * a, 2)]
-    result_list = []
+    # result_list = [
+    #     f'a = {a}, b = {b}, c = {c}. root = {root(a, b, c, discriminant)}'
+    #     for a in range(a1, a2)
+    #     for b in range(b1, b2)
+    #     for c in range(c1, c2)
+    #     if discriminant(a, b, c) >= 0
+    # ]
     """
         Хотілось зробити повноцінний генератор і сходу згенерувати в result_list. Але мені заважає None в перевірці 
         дискримінанту. Прийшлось винести на зовні та користуватись append. Інакше всі None попадають в список. І
         костилі у вигляді '[[['. Не подобається мені це моє рішення. Пробував якось виправити за допомогою лямбда,
         та щось не складається в мене. Якщо є якись варіант був би радий побачити.
     """
-    [[[result_list.append({'a': a, 'b': b, 'c': c, 'root': root(a, b, c, discriminant)}) if discriminant(a, b, c) >= 0
-       else None for c in range(c1, c2)] for b in range(b1, b2)] for a in range(a1, a2)]
+    result_list = []
+    [result_list.append({'a': a, 'b': b, 'c': c, 'root': root(a, b, c, discriminant)})
+     if discriminant(a, b, c) >= 0 else None
+     for c in range(c1, c2)
+     for b in range(b1, b2)
+     for a in range(a1, a2)]
 
     """
         Якщо чесно, такий синтаксис мені більше підходить. але якщо б вдалось згенерувати зразу в ліст, я б віддав 
@@ -236,8 +249,14 @@ def quadratic_equation(request):
     Код рішення ДЗ1 квадратне рівняння кінець -------------------------------------------------------------------------
     """
 
-    data['results'] = result_list  # Django
-    html_msg.success(request, f'Знайдено {len(result_list)} рішень')  # Django
+    data['results'] = [
+        {'a': a, 'b': b, 'c': c, 'root': root(a, b, c, discriminant)}
+        for a in range(a1, a2)
+        for b in range(b1, b2)
+        for c in range(c1, c2)
+        if discriminant(a, b, c) >= 0
+    ]  # Django
+    html_msg.success(request, f'''Знайдено {len(data['results'])} рішень''')  # Django
     return render(request, 'todolist/equation.html', data)  # Django
 
 
